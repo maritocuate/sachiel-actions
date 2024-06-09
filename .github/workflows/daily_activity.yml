@@ -1,0 +1,21 @@
+name: Daily GitHub Activity
+
+on:
+  schedule:
+    - cron: '0 12 * * *' # Esto ejecutará la acción todos los días a las 12 del mediodía
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+    - name: Create file with date
+      run: echo "$(date)" > daily_activity.txt
+    - name: Commit and push
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add daily_activity.txt
+        git commit -m "Add daily activity"
+        git push
